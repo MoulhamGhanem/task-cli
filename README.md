@@ -17,10 +17,12 @@ Unlike interactive console applications that rely on constant `while` loops and 
 
 ## 🏗️ Architecture & Project Structure
 
-The codebase is divided logically to separate data management from user interface routing:
+The codebase has been refactored to follow **Clean Architecture** and the **Single Responsibility Principle**, separated into distinct logical layers:
 
-- `clsTask.cs`: The core engine. Handles object instantiation, JSON serialization/deserialization, file I/O operations, and business logic (Add, Update, Delete, Change Status).
-- `Program.cs`: The entry point and router. Validates OS-level arguments (`args`), parses inputs, and directs commands to the appropriate methods in `clsTask`.
+- **Models (`TaskItem.cs`)**: Pure data containers representing the core entity and its properties (ID, Description, Status, Timestamps) with zero business logic.
+- **Interfaces (`ITaskManager.cs`)**: The contract defining the capabilities of the system, ensuring loose coupling and easy future extensions (e.g., swapping JSON for a SQL database).
+- **Services (`TaskManager.cs`)**: The core engine implementing the interface. Handles JSON serialization/deserialization, file I/O operations, ID generation, and all CRUD business logic.
+- **`Program.cs`**: The entry point and router (Presentation Layer). Validates OS-level arguments (`args`), safely parses inputs using `TryParse`, and delegates operations to the `TaskManager` service.
 
 ## 💻 Installation & Setup
 
